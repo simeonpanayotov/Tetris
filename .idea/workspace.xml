@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5fcd3415-9407-48b8-b8e1-5b5891242b33" name="Default" comment="Added base constants.&#10;Added code that creates the window with the correct dimensions.&#10;Added code that runs the main run() function if invoked from the __main__ module.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tetris.py" />
+    <list default="true" id="5fcd3415-9407-48b8-b8e1-5b5891242b33" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grid.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shapes.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/brick.png" afterPath="$PROJECT_DIR$/data/brick.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tetris.py" afterPath="$PROJECT_DIR$/tetris.py" />
     </list>
     <ignored path="Tetris.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +31,21 @@
       <file leaf-file-name="tetris.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tetris.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="9" selection-start="398" selection-end="398" vertical-scroll-proportion="0.67266184">
-              <folding />
+            <state line="87" column="39" selection-start="2386" selection-end="2386" vertical-scroll-proportion="0.51248515">
+              <folding>
+                <element signature="e#23#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shapes.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shapes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="8" selection-start="1384" selection-end="1397" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#23#37#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,6 +68,11 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/bouncingball" />
+        <option value="$PROJECT_DIR$/shapes/__init__.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/shapes/box.py" />
+        <option value="$PROJECT_DIR$/grid.py" />
+        <option value="$PROJECT_DIR$/shapes.py" />
         <option value="$PROJECT_DIR$/tetris.py" />
       </list>
     </option>
@@ -147,6 +168,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\FMI\Python\Tetris\data" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\FMI\Python\Tetris" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.Tetris">
     <configuration default="false" name="Tetris" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -163,7 +187,9 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tetris.py" />
       <option name="PARAMETERS" value="" />
       <option name="MULTIPROCESS" value="false" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
@@ -277,7 +303,15 @@
       <created>1346538748895</created>
       <updated>1346538748895</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added base constants.&#10;Added code that creates the window with the correct dimensions.&#10;Added code that runs the main run() function if invoked from the __main__ module.">
+      <created>1346539245733</created>
+      <updated>1346539245733</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implemented the main game loop and fixed the size of the window. Must test it on the laptop and see if the dimensions need to be changed.">
+      <created>1346540001166</created>
+      <updated>1346540001166</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -302,15 +336,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3290993" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.249694" sideWeight="0.6709007" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.249694" sideWeight="0.68475753" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3152425" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3290993" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -361,7 +395,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added base constants.&#10;Added code that creates the window with the correct dimensions.&#10;Added code that runs the main run() function if invoked from the __main__ module." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented the main game loop and fixed the size of the window. Must test it on the laptop and see if the dimensions need to be changed." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -376,15 +410,41 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Integrated the PyCharm project with the previously created Git repository." />
     <MESSAGE value="Added base constants.&#10;Added code that creates the window with the correct dimensions.&#10;Added code that runs the main run() function if invoked from the __main__ module." />
+    <MESSAGE value="Implemented the main game loop and fixed the size of the window. Must test it on the laptop and see if the dimensions need to be changed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://D:/Python/Lib/site-packages/pygame/sprite.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="461" column="0" selection-start="16782" selection-end="16782" vertical-scroll-proportion="0.33293697">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shapes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="8" selection-start="1384" selection-end="1397" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#23#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="9" selection-start="398" selection-end="398" vertical-scroll-proportion="0.67266184">
-          <folding />
+        <state line="87" column="39" selection-start="2386" selection-end="2386" vertical-scroll-proportion="0.51248515">
+          <folding>
+            <element signature="e#23#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
