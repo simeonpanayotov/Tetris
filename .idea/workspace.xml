@@ -31,10 +31,8 @@
       <file leaf-file-name="tetris.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tetris.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="39" selection-start="2386" selection-end="2386" vertical-scroll-proportion="0.51248515">
-              <folding>
-                <element signature="e#23#36#0" expanded="true" />
-              </folding>
+            <state line="17" column="25" selection-start="415" selection-end="415" vertical-scroll-proportion="-2.0404282">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -42,7 +40,7 @@
       <file leaf-file-name="shapes.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shapes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="8" selection-start="1384" selection-end="1397" vertical-scroll-proportion="0.0">
+            <state line="41" column="40" selection-start="1250" selection-end="1251" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#23#37#0" expanded="true" />
               </folding>
@@ -311,7 +309,11 @@
       <created>1346540001166</created>
       <updated>1346540001166</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implemented basic box movement and stacking">
+      <created>1346549445604</created>
+      <updated>1346549445604</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -336,12 +338,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3290993" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.249694" sideWeight="0.68475753" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3152425" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -351,7 +354,6 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -395,7 +397,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented the main game loop and fixed the size of the window. Must test it on the laptop and see if the dimensions need to be changed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented basic box movement and stacking" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -411,6 +413,7 @@
     <MESSAGE value="Integrated the PyCharm project with the previously created Git repository." />
     <MESSAGE value="Added base constants.&#10;Added code that creates the window with the correct dimensions.&#10;Added code that runs the main run() function if invoked from the __main__ module." />
     <MESSAGE value="Implemented the main game loop and fixed the size of the window. Must test it on the laptop and see if the dimensions need to be changed." />
+    <MESSAGE value="Implemented basic box movement and stacking" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -432,7 +435,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shapes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="8" selection-start="1384" selection-end="1397" vertical-scroll-proportion="0.0">
+        <state line="41" column="40" selection-start="1250" selection-end="1251" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#23#37#0" expanded="true" />
           </folding>
@@ -441,10 +444,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="39" selection-start="2386" selection-end="2386" vertical-scroll-proportion="0.51248515">
-          <folding>
-            <element signature="e#23#36#0" expanded="true" />
-          </folding>
+        <state line="17" column="25" selection-start="415" selection-end="415" vertical-scroll-proportion="-2.0404282">
+          <folding />
         </state>
       </provider>
     </entry>
