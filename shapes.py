@@ -75,3 +75,12 @@ class SquareShape(Shape):
         self.boxes.append(Box((grid_pos[0] * BOX_LENGTH, 0), grid_pos))
         # lower right
         self.boxes.append(Box(((grid_pos[0] + 1) * BOX_LENGTH, 0), (grid_pos[0] + 1, grid_pos[1])))
+
+class BarShape(Shape):
+    def __init__(self, grid_pos):
+        Shape.__init__(self)
+
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -3 * BOX_LENGTH), (grid_pos[0], grid_pos[1] + 3)))
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -2 * BOX_LENGTH), (grid_pos[0], grid_pos[1] + 2)))
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -1 * BOX_LENGTH), (grid_pos[0], grid_pos[1] + 1)))
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  0), grid_pos))

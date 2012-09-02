@@ -1,5 +1,6 @@
 __author__ = 'simeon'
 
+import random
 import pygame
 from pygame.locals import *
 import shapes
@@ -69,9 +70,12 @@ class Grid():
         return 1
 
 def create_active_shape():
-    shape = shapes.SquareShape(START_POS_GRID)
+    shape_type = random.randrange(1, 3)
 
-    return shape
+    if shape_type == 1:
+        return shapes.BarShape(START_POS_GRID)
+
+    return shapes.SquareShape(START_POS_GRID)
 
 def run():
     pygame.init()

@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fcd3415-9407-48b8-b8e1-5b5891242b33" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grid.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shapes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/brick.png" afterPath="$PROJECT_DIR$/data/brick.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shapes.py" afterPath="$PROJECT_DIR$/shapes.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tetris.py" afterPath="$PROJECT_DIR$/tetris.py" />
     </list>
     <ignored path="Tetris.iws" />
@@ -31,8 +29,10 @@
       <file leaf-file-name="tetris.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tetris.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="25" selection-start="415" selection-end="415" vertical-scroll-proportion="-2.0404282">
-              <folding />
+            <state line="59" column="38" selection-start="1711" selection-end="1711" vertical-scroll-proportion="0.41854936">
+              <folding>
+                <element signature="e#23#36#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,7 +40,7 @@
       <file leaf-file-name="shapes.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shapes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="40" selection-start="1250" selection-end="1251" vertical-scroll-proportion="0.0">
+            <state line="64" column="0" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#23#37#0" expanded="true" />
               </folding>
@@ -313,7 +313,11 @@
       <created>1346549445604</created>
       <updated>1346549445604</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Implemented the SquareShape and reafactored the tetris code to work with shapes now.">
+      <created>1346552804544</created>
+      <updated>1346552804544</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -397,7 +401,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented basic box movement and stacking" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented the SquareShape and reafactored the tetris code to work with shapes now." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -414,6 +418,7 @@
     <MESSAGE value="Added base constants.&#10;Added code that creates the window with the correct dimensions.&#10;Added code that runs the main run() function if invoked from the __main__ module." />
     <MESSAGE value="Implemented the main game loop and fixed the size of the window. Must test it on the laptop and see if the dimensions need to be changed." />
     <MESSAGE value="Implemented basic box movement and stacking" />
+    <MESSAGE value="Implemented the SquareShape and reafactored the tetris code to work with shapes now." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -435,7 +440,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shapes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="40" selection-start="1250" selection-end="1251" vertical-scroll-proportion="0.0">
+        <state line="64" column="0" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#23#37#0" expanded="true" />
           </folding>
@@ -444,8 +449,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="25" selection-start="415" selection-end="415" vertical-scroll-proportion="-2.0404282">
-          <folding />
+        <state line="59" column="38" selection-start="1711" selection-end="1711" vertical-scroll-proportion="0.41854936">
+          <folding>
+            <element signature="e#23#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
