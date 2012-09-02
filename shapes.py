@@ -84,3 +84,21 @@ class BarShape(Shape):
         self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -2 * BOX_LENGTH), (grid_pos[0], grid_pos[1] + 2)))
         self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -1 * BOX_LENGTH), (grid_pos[0], grid_pos[1] + 1)))
         self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  0), grid_pos))
+
+class CaneShape(Shape):
+    def __init__(self, grid_pos):
+        Shape.__init__(self)
+
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -2 * BOX_LENGTH), (grid_pos[0], grid_pos[1] + 2)))
+        self.boxes.append(Box(((grid_pos[0] + 1) * BOX_LENGTH,  -2 * BOX_LENGTH), (grid_pos[0] + 1, grid_pos[1] + 2)))
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  -BOX_LENGTH), (grid_pos[0], grid_pos[1] + 1)))
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  0), grid_pos))
+
+class ZigZagShape(Shape):
+    def __init__(self, grid_pos):
+        Shape.__init__(self)
+
+        self.boxes.append(Box((grid_pos[0] * BOX_LENGTH,  0), grid_pos))
+        self.boxes.append(Box(((grid_pos[0] + 1) * BOX_LENGTH,  -BOX_LENGTH), (grid_pos[0] + 1, grid_pos[1] + 1)))
+        self.boxes.append(Box(((grid_pos[0] + 1) * BOX_LENGTH,  0), (grid_pos[0] + 1, grid_pos[1])))
+        self.boxes.append(Box(((grid_pos[0] + 2) * BOX_LENGTH,  -BOX_LENGTH), (grid_pos[0] + 2, grid_pos[1] + 1)))
