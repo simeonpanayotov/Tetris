@@ -70,12 +70,9 @@ class Grid():
         return 1
 
 def create_active_shape():
-    shape_type = random.randrange(1, 3)
+    shape_type = random.choice([shapes.BarShape, shapes.SquareShape])
 
-    if shape_type == 1:
-        return shapes.BarShape(START_POS_GRID)
-
-    return shapes.SquareShape(START_POS_GRID)
+    return shape_type(START_POS_GRID)
 
 def run():
     pygame.init()
