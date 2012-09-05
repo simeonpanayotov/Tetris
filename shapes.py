@@ -115,11 +115,13 @@ class Bar(Shape):
             return Bar._vertical_transform
 
     def _negate_transform(self, transform):
-        for key in transform:
-            transform[key] = (transform[key][0] * -1,
-                              transform[key][1] * -1)
+        negated_transform = {}
 
-        return transform
+        for key in transform:
+            negated_transform[key] = (transform[key][0] * -1,
+                                      transform[key][1] * -1)
+
+        return negated_transform
 
     def _confirm_next_position(self):
         self.vertical = not self.vertical

@@ -36,7 +36,7 @@ class Grid():
             elif key == K_RIGHT and self.can_shape_move_right(self.active_shape):
                 self.active_shape.move_right()
             elif key == K_UP:
-                self.rotate(self.grid)
+                self.active_shape.rotate(self.grid)
 
         self.active_shape.move_down()
 
@@ -95,7 +95,6 @@ class Grid():
 
     def _place_new_shape(self):
         shape_type = random.choice(
-            [shapes.Bar, shapes.Square,
-             shapes.Cane, shapes.ZigZag])
+            [shapes.Bar])
 
         return shape_type(START_X, START_Y)
