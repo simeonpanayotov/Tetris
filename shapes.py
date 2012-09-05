@@ -65,7 +65,7 @@ class Shape():
             self._rotate(transform)
 
     def _get_next_transform(self):
-        pass
+        return {}
 
     def _confirm_next_position(self):
         pass
