@@ -19,12 +19,9 @@ def run():
     background.fill(BG_COLOR)
 
     tetris = grid.Grid()
-    active_shape = tetris.place_new_shape()
-    active_boxes = pygame.sprite.RenderPlain(active_shape.boxes)
-    placed_boxes = pygame.sprite.RenderPlain()
 
     screen.blit(background, (0, 0))
-    active_boxes.draw(screen)
+    tetris.draw(screen)
     pygame.display.flip()
 
     clock = pygame.time.Clock()
@@ -32,32 +29,19 @@ def run():
     while 1:
         clock.tick(SPEED)
 
-        if tetris.is_shape_placed(active_shape):
-            active_boxes.remove(active_shape.boxes)
-            placed_boxes.add(active_shape.boxes)
-            tetris.mark_shape_place(active_shape)
-
-            active_shape = tetris.place_new_shape()
-            active_boxes.add(active_shape.boxes)
-            continue
+        key = None
 
         for event in pygame.event.get():
             if event.type == QUIT:
                 return
             elif event.type == KEYDOWN:
-                if event.key == K_LEFT and tetris.can_shape_move_left(active_shape):
-                    active_shape.move_left()
-                elif event.key == K_RIGHT and tetris.can_shape_move_right(active_shape):
-                    active_shape.move_right()
-                elif event.key == K_UP:
-                    active_shape.rotate(tetris.grid)
+                key = event.key
 
-        active_shape.move_down()
+        tetris.tick(key)
 
         screen.blit(background, (0, 0))
-        active_boxes.update()
-        active_boxes.draw(screen)
-        placed_boxes.draw(screen)
+        tetris.update()
+        tetris.draw(screen)
         pygame.display.flip()
 
 if __name__ == "__main__":

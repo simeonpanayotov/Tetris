@@ -1,5 +1,7 @@
 import shapes
 import random
+import pygame
+from pygame import *
 
 BOX_LENGTH = shapes.BOX_LENGTH
 COLUMN_COUNT = 10
@@ -22,6 +24,37 @@ class Grid():
 
         for x in range(COLUMN_COUNT):
             self.grid.append([None] * ROW_COUNT)
+
+        active_shape = self.active_shape = self._place_new_shape()
+        self.active_boxes = pygame.sprite.RenderPlain(active_shape.boxes)
+        self.placed_boxes = pygame.sprite.RenderPlain()
+
+    def tick(self, key):
+        if key:
+            if key == K_LEFT and self.can_shape_move_left(self.active_shape):
+                self.active_shape.move_left()
+            elif key == K_RIGHT and self.can_shape_move_right(self.active_shape):
+                self.active_shape.move_right()
+            elif key == K_UP:
+                self.rotate(self.grid)
+
+        self.active_shape.move_down()
+
+        if self.is_shape_placed(self.active_shape):
+            self.active_boxes.remove(self.active_shape.boxes)
+            self.placed_boxes.add(self.active_shape.boxes)
+            self.mark_shape_place(self.active_shape)
+
+            self.active_shape = self._place_new_shape()
+            self.active_boxes.add(self.active_shape.boxes)
+
+    def draw(self, screen):
+        self.active_boxes.draw(screen)
+        self.placed_boxes.draw(screen)
+
+    def update(self):
+        self.active_boxes.update()
+        self.placed_boxes.update()
 
     def is_shape_placed(self, shape):
         if self.has_box_at_grid_bottom(shape):
@@ -60,7 +93,7 @@ class Grid():
                 return 0
         return 1
 
-    def place_new_shape(self):
+    def _place_new_shape(self):
         shape_type = random.choice(
             [shapes.Bar, shapes.Square,
              shapes.Cane, shapes.ZigZag])
