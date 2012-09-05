@@ -15,11 +15,14 @@ GRID_ROW_COUNT = ROW_COUNT + NEW_SHAPE_BUFFER_LENGTH
 START_X = COLUMN_COUNT // 2 - 1
 START_Y = ROW_COUNT - 1
 START_POS_SCREEN = (START_X * BOX_LENGTH, ROW_COUNT - START_Y)
-START_POS_GRID = (START_X, START_Y)
+START_POS_GRID = shapes.Coords(START_X, START_Y)
 
+# TODO: Rename to Tetris and try renaming the module as well but not to Tetris.
 class Grid():
     def __init__(self):
-        # Create the grid that defines the positioned and movable shapes.
+        """
+        Create the grid that represents the Tetris logical surfrace.
+        """
         self.grid = []
 
         for x in range(COLUMN_COUNT):
@@ -34,31 +37,31 @@ class Grid():
 
     def has_box_at_grid_bottom(self, shape):
         for box in shape.boxes:
-            if not box.grid_pos[1]:
+            if not box.grid_pos.y:
                 return 1
         return 0
 
     def has_box_below(self, shape):
         for box in shape.boxes:
-            if self.grid[box.grid_pos[0]][box.grid_pos[1] - 1]:
+            if self.grid[box.grid_pos.x][box.grid_pos.y - 1]:
                 return 1
         return 0
 
     def mark_shape_place(self, shape):
         for box in shape.boxes:
-            self.grid[box.grid_pos[0]][box.grid_pos[1]] = box
+            self.grid[box.grid_pos.x][box.grid_pos.y] = box
 
     def can_shape_move_left(self, shape):
         for box in shape.boxes:
-            if not box.grid_pos[0] or\
-               self.grid[box.grid_pos[0] - 1][box.grid_pos[1]]:
+            if not box.grid_pos.x or\
+               self.grid[box.grid_pos.x - 1][box.grid_pos.y]:
                 return 0
         return 1
 
     def can_shape_move_right(self, shape):
         for box in shape.boxes:
-            if box.grid_pos[0] == (COLUMN_COUNT - 1) or\
-               self.grid[box.grid_pos[0] + 1][box.grid_pos[1]]:
+            if box.grid_pos.x == (COLUMN_COUNT - 1) or\
+               self.grid[box.grid_pos.x + 1][box.grid_pos.y]:
                 return 0
         return 1
 
