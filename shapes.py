@@ -87,7 +87,7 @@ class Shape():
         for box in self.boxes:
             box.move_right()
 
-class SquareShape(Shape):
+class Square(Shape):
     def __init__(self, grid_pos):
         Shape.__init__(self)
 
@@ -108,7 +108,7 @@ class SquareShape(Shape):
             ((grid_pos.x + 1) * BOX_LENGTH, 0),
             Coords(grid_pos.x + 1, grid_pos.y)))
 
-class BarShape(Shape):
+class Bar(Shape):
     def __init__(self, grid_pos):
         Shape.__init__(self)
 
@@ -125,7 +125,7 @@ class BarShape(Shape):
             (grid_pos.x * BOX_LENGTH,  0),
             Coords(grid_pos)))
 
-class CaneShape(Shape):
+class Cane(Shape):
     def __init__(self, grid_pos):
         Shape.__init__(self)
 
@@ -142,7 +142,7 @@ class CaneShape(Shape):
             (grid_pos.x * BOX_LENGTH,  0),
             Coords(grid_pos)))
 
-class ZigZagShape(Shape):
+class ZigZag(Shape):
     def __init__(self, grid_pos):
         Shape.__init__(self)
 
