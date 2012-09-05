@@ -55,6 +55,19 @@ class Shape():
             box.move_right()
 
     def rotate(self, grid):
+        transform = self._get_next_transform()
+        self._rotate(transform)
+
+        if self._is_position_valid(grid):
+            self._confirm_next_position()
+        else:
+            transform = self._negate_transform(transform)
+            self._rotate(transform)
+
+    def _get_next_transform(self):
+        pass
+
+    def _confirm_next_position(self):
         pass
 
     def _is_position_valid(self, grid):
@@ -68,6 +81,20 @@ class Shape():
                 return 0
 
         return 1
+
+    def _negate_transform(self, transform):
+        negated_transform = {}
+
+        for key in transform:
+            negated_transform[key] = (transform[key][0] * -1,
+                                      transform[key][1] * -1)
+
+        return negated_transform
+
+    def _rotate(self, transform):
+        for key in transform:
+            self.boxes[key].x += transform[key][0]
+            self.boxes[key].y += transform[key][1]
 
 class Square(Shape):
     def __init__(self, x, y):
@@ -114,32 +141,8 @@ class Bar(Shape):
         else:
             return Bar._vertical_transform
 
-    def _negate_transform(self, transform):
-        negated_transform = {}
-
-        for key in transform:
-            negated_transform[key] = (transform[key][0] * -1,
-                                      transform[key][1] * -1)
-
-        return negated_transform
-
     def _confirm_next_position(self):
         self.vertical = not self.vertical
-
-    def _rotate(self, transform):
-        for key in transform:
-            self.boxes[key].x += transform[key][0]
-            self.boxes[key].y += transform[key][1]
-
-    def rotate(self, grid):
-        transform = self._get_next_transform()
-        self._rotate(transform)
-
-        if self._is_position_valid(grid):
-            self._confirm_next_position()
-        else:
-            transform = self._negate_transform(transform)
-            self._rotate(transform)
 
 
 class Cane(Shape):
