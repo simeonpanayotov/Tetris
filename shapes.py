@@ -1,6 +1,6 @@
 __author__ = 'simeon'
 
-import os, sys
+import os
 import pygame
 
 BOX_LENGTH = 40
