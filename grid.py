@@ -38,8 +38,6 @@ class Grid():
             elif key == K_UP:
                 self.active_shape.rotate(self.grid)
 
-        self.active_shape.move_down()
-
         if self.is_shape_placed(self.active_shape):
             self.active_boxes.remove(self.active_shape.boxes)
             self.placed_boxes.add(self.active_shape.boxes)
@@ -47,6 +45,8 @@ class Grid():
 
             self.active_shape = self._place_new_shape()
             self.active_boxes.add(self.active_shape.boxes)
+        else:
+            self.active_shape.move_down()
 
     def draw(self, screen):
         self.active_boxes.draw(screen)
