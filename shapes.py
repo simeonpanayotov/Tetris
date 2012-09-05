@@ -184,10 +184,63 @@ class ZigZag(VerticalShape):
             return ZigZag._vertical_transform
 
 class Cane(Shape):
+    _right_transform = {
+        0: (1, 0),
+        1: (0, 1),
+        2: (0, -1),
+        3: (-1, -2)
+    }
+
+    _bottom_transform = {
+        0: (-1, 2),
+        1: (0, 1),
+        2: (1, 1),
+        3: (2, 0)
+    }
+
+    _left_transform = {
+        0: (-1, -1),
+        1: (-2, -2),
+        2: (-1, 0),
+        3: (0, 1)
+    }
+
+    _top_transform = {
+        0: (1, -1),
+        1: (2, 0),
+        2: (0, 0),
+        3: (-1, 1)
+    }
+
     def __init__(self, x, y):
         Shape.__init__(self)
+
+        self._position = 0
 
         self.boxes.append(Box(x, y))
         self.boxes.append(Box(x + 1, y))
         self.boxes.append(Box(x, y + 1))
         self.boxes.append(Box(x, y + 2))
+
+    def _get_next_transform(self):
+        next_position = self._get_next_position()
+
+        if next_position == 0:
+            return Cane._top_transform
+        elif next_position == 1:
+            return Cane._right_transform
+        elif next_position == 2:
+            return Cane._bottom_transform
+        else:
+            return Cane._left_transform
+
+    def _get_next_position(self):
+        next_position = self._position + 1
+
+        if next_position > 3:
+            next_position = 0
+
+        return next_position
+
+    def _confirm_next_position(self):
+        self._position = self._get_next_position()
