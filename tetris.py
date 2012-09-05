@@ -1,5 +1,3 @@
-__author__ = 'simeon'
-
 import pygame
 from pygame.locals import *
 import grid

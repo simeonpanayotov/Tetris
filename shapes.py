@@ -1,5 +1,3 @@
-__author__ = 'simeon'
-
 import os
 import pygame
 
