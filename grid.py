@@ -65,7 +65,7 @@ class Grid():
                 return 0
         return 1
 
-    def create_active_shape(self):
+    def place_new_shape(self):
         shape_type = random.choice(
             [shapes.Bar, shapes.Square,
              shapes.Cane, shapes.ZigZag])

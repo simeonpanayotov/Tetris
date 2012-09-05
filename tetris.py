@@ -19,7 +19,7 @@ def run():
     background.fill(BG_COLOR)
 
     tetris = grid.Grid()
-    active_shape = tetris.create_active_shape()
+    active_shape = tetris.place_new_shape()
     active_boxes = pygame.sprite.RenderPlain(active_shape.boxes)
     placed_boxes = pygame.sprite.RenderPlain()
 
@@ -37,7 +37,7 @@ def run():
             placed_boxes.add(active_shape.boxes)
             tetris.mark_shape_place(active_shape)
 
-            active_shape = tetris.create_active_shape()
+            active_shape = tetris.place_new_shape()
             active_boxes.add(active_shape.boxes)
             continue
 
