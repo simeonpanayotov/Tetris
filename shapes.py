@@ -41,6 +41,9 @@ class Coords():
         """
         self.y = self.y + value
 
+    def to_tuple(self):
+        return (self.x, self.y)
+
 class Box(pygame.sprite.Sprite):
     def __init__(self, topleft, grid_pos):
         pygame.sprite.Sprite.__init__(self) # Call Sprite initializer.
@@ -51,22 +54,22 @@ class Box(pygame.sprite.Sprite):
         self.reinit()
 
     def reinit(self):
-        self.move_pos = (0, 0)
+        self.screen_pos_delta = Coords(0, 0)
 
     def move_down(self):
-        self.move_pos = (self.move_pos[0], self.move_pos[1] + BOX_LENGTH)
+        self.screen_pos_delta.addY(BOX_LENGTH)
         self.grid_pos.addY(-1)
 
     def move_left(self):
-        self.move_pos = (self.move_pos[0] - BOX_LENGTH, self.move_pos[1])
+        self.screen_pos_delta.addX(-BOX_LENGTH)
         self.grid_pos.addX(-1)
 
     def move_right(self):
-        self.move_pos = (self.move_pos[0] + BOX_LENGTH, self.move_pos[1])
+        self.screen_pos_delta.addX(BOX_LENGTH)
         self.grid_pos.addX(1)
 
     def update(self):
-        new_pos = self.rect.move(self.move_pos)
+        new_pos = self.rect.move(self.screen_pos_delta.to_tuple())
         self.rect = new_pos
 
         self.reinit()
