@@ -109,7 +109,17 @@ class Square(Shape):
         # lower right
         self.boxes.append(Box(x + 1, y + 1))
 
-class Bar(Shape):
+class VerticalShape(Shape):
+    def __init__(self):
+        Shape.__init__(self)
+
+    def _get_next_transform(self):
+        pass
+
+    def _confirm_next_position(self):
+        self.vertical = not self.vertical
+
+class Bar(VerticalShape):
     #TODO: check conventions!!!
     _vertical_transform = {
         0: (1, -1),
@@ -126,7 +136,7 @@ class Bar(Shape):
     }
 
     def __init__(self, x, y):
-        Shape.__init__(self)
+        VerticalShape.__init__(self)
 
         self.vertical = True
 
@@ -141,9 +151,37 @@ class Bar(Shape):
         else:
             return Bar._vertical_transform
 
-    def _confirm_next_position(self):
-        self.vertical = not self.vertical
+class ZigZag(VerticalShape):
+    #TODO: check conventions!!!
+    _vertical_transform = {
+        0: (0, 1),
+        1: (-1, 2),
+        2: (0, -1),
+        3: (-1, 0)
+    }
+    #TODO: check conventions!!!
+    _horizontal_transform = {
+        0: (0, -1),
+        1: (1, -2),
+        2: (0, 1),
+        3: (1, 0)
+    }
 
+    def __init__(self, x, y):
+        VerticalShape.__init__(self)
+
+        self.vertical = False
+
+        self.boxes.append(Box(x, y))
+        self.boxes.append(Box(x + 1, y))
+        self.boxes.append(Box(x - 1, y + 1))
+        self.boxes.append(Box(x, y + 1))
+
+    def _get_next_transform(self):
+        if self.vertical:
+            return ZigZag._horizontal_transform
+        else:
+            return ZigZag._vertical_transform
 
 class Cane(Shape):
     def __init__(self, x, y):
@@ -153,12 +191,3 @@ class Cane(Shape):
         self.boxes.append(Box(x + 1, y))
         self.boxes.append(Box(x, y + 1))
         self.boxes.append(Box(x, y + 2))
-
-class ZigZag(Shape):
-    def __init__(self, x, y):
-        Shape.__init__(self)
-
-        self.boxes.append(Box(x, y))
-        self.boxes.append(Box(x + 1, y))
-        self.boxes.append(Box(x - 1, y + 1))
-        self.boxes.append(Box(x, y + 1))
