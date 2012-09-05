@@ -1,7 +1,7 @@
 import os
 import pygame
 
-BOX_LENGTH = 40
+BOX_LENGTH = 30
 
 def load_image(name):
     fullname = os.path.abspath(os.path.join("data", name))
@@ -12,8 +12,10 @@ def load_image(name):
 #        print ('Cannot load image:', name)
 #        raise SystemExit(err.args)
     image = image.convert()
+    scaled_image = pygame.Surface((BOX_LENGTH, BOX_LENGTH))
+    pygame.transform.scale(image, (BOX_LENGTH, BOX_LENGTH), scaled_image)
 
-    return image, image.get_rect()
+    return scaled_image, scaled_image.get_rect()
 
 class Coords():
     def __init__(self, *args):
