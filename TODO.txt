@@ -1,0 +1,1 @@
+-- Implement blitting only of a portion of the surface when animating the moving shapes.
