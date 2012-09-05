@@ -69,8 +69,8 @@ class Box(pygame.sprite.Sprite):
         self.grid_pos.add_x(1)
 
     def update(self):
-        new_pos = self.rect.move(self.screen_pos_delta.to_tuple())
-        self.rect = new_pos
+        moved_rect = self.rect.move(self.screen_pos_delta.to_tuple())
+        self.rect = moved_rect
 
         self.reinit()
 
