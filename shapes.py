@@ -17,61 +17,34 @@ def load_image(name):
 
     return scaled_image, scaled_image.get_rect()
 
-class Coords():
-    def __init__(self, *args):
-        """
-        Creates an object representing the coordinates of a point in
-        a two-dimensional coordinate system. Used for both the screen
-        and grid points.
-        """
-        if len(args) == 1:
-            self.x = args[0].x
-            self.y = args[0].y
-        elif len(args) == 2:
-            self.x = args[0]
-            self.y = args[1]
-
-    def add_x(self, value):
-        """
-        Adds a value to the x coordinate.
-        """
-        self.x = self.x + value
-
-    def add_y(self, value):
-        """
-        Adds a value to the y coordinate.
-        """
-        self.y = self.y + value
-
-    def to_tuple(self):
-        return (self.x, self.y)
-
 class Box(pygame.sprite.Sprite):
-    def __init__(self, topleft, grid_pos):
+    def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self) # Call Sprite initializer.
 
         self.image, self.rect = load_image("brick.png")
-        self.rect.topleft = topleft
-        self.grid_pos = grid_pos
+        self.rect.topleft = (x * BOX_LENGTH, y * BOX_LENGTH)
+        self.x = x
+        self.y = y
         self.reinit()
 
     def reinit(self):
-        self.screen_pos_delta = Coords(0, 0)
+        self.screen_delta_x = 0
+        self.screen_delta_y = 0
 
     def move_down(self):
-        self.screen_pos_delta.add_y(BOX_LENGTH)
-        self.grid_pos.add_y(-1)
+        self.screen_delta_y = self.screen_delta_y + BOX_LENGTH
+        self.y += 1
 
     def move_left(self):
-        self.screen_pos_delta.add_x(-BOX_LENGTH)
-        self.grid_pos.add_x(-1)
+        self.screen_delta_x = self.screen_delta_x - BOX_LENGTH
+        self.x -= 1
 
     def move_right(self):
-        self.screen_pos_delta.add_x(BOX_LENGTH)
-        self.grid_pos.add_x(1)
+        self.screen_delta_x = self.screen_delta_x + BOX_LENGTH
+        self.x += 1
 
     def update(self):
-        moved_rect = self.rect.move(self.screen_pos_delta.to_tuple())
+        moved_rect = self.rect.move((self.screen_delta_x, self.screen_delta_y))
         self.rect = moved_rect
 
         self.reinit()
@@ -93,73 +66,41 @@ class Shape():
             box.move_right()
 
 class Square(Shape):
-    def __init__(self, grid_pos):
+    def __init__(self, x, y):
         Shape.__init__(self)
 
         # upper left
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH, -BOX_LENGTH),
-            Coords(grid_pos.x, grid_pos.y + 1)))
+        self.boxes.append(Box(x, y))
         # upper right
-        self.boxes.append(Box(
-            ((grid_pos.x + 1) * BOX_LENGTH, -BOX_LENGTH),
-            Coords(grid_pos.x + 1, grid_pos.y + 1)))
+        self.boxes.append(Box(x + 1, y))
         # lower left
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH, 0),
-            Coords(grid_pos)))
+        self.boxes.append(Box(x, y + 1))
         # lower right
-        self.boxes.append(Box(
-            ((grid_pos.x + 1) * BOX_LENGTH, 0),
-            Coords(grid_pos.x + 1, grid_pos.y)))
+        self.boxes.append(Box(x + 1, y + 1))
 
 class Bar(Shape):
-    def __init__(self, grid_pos):
+    def __init__(self, x, y):
         Shape.__init__(self)
 
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  -3 * BOX_LENGTH),
-            Coords(grid_pos.x, grid_pos.y + 3)))
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  -2 * BOX_LENGTH),
-            Coords(grid_pos.x, grid_pos.y + 2)))
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  -1 * BOX_LENGTH),
-            Coords(grid_pos.x, grid_pos.y + 1)))
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  0),
-            Coords(grid_pos)))
+        self.boxes.append(Box(x, y))
+        self.boxes.append(Box(x, y + 1))
+        self.boxes.append(Box(x, y + 2))
+        self.boxes.append(Box(x, y + 3))
 
 class Cane(Shape):
-    def __init__(self, grid_pos):
+    def __init__(self, x, y):
         Shape.__init__(self)
 
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  -2 * BOX_LENGTH),
-            Coords(grid_pos.x, grid_pos.y + 2)))
-        self.boxes.append(Box(
-            ((grid_pos.x + 1) * BOX_LENGTH,  -2 * BOX_LENGTH),
-            Coords(grid_pos.x + 1, grid_pos.y + 2)))
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  -BOX_LENGTH),
-            Coords(grid_pos.x, grid_pos.y + 1)))
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  0),
-            Coords(grid_pos)))
+        self.boxes.append(Box(x, y))
+        self.boxes.append(Box(x + 1, y))
+        self.boxes.append(Box(x, y + 1))
+        self.boxes.append(Box(x, y + 2))
 
 class ZigZag(Shape):
-    def __init__(self, grid_pos):
+    def __init__(self, x, y):
         Shape.__init__(self)
 
-        self.boxes.append(Box(
-            (grid_pos.x * BOX_LENGTH,  0),
-            Coords(grid_pos)))
-        self.boxes.append(Box(
-            ((grid_pos.x + 1) * BOX_LENGTH,  -BOX_LENGTH),
-            Coords(grid_pos.x + 1, grid_pos.y + 1)))
-        self.boxes.append(Box(
-            ((grid_pos.x + 1) * BOX_LENGTH,  0),
-            Coords(grid_pos.x + 1, grid_pos.y)))
-        self.boxes.append(Box(
-            ((grid_pos.x + 2) * BOX_LENGTH,  -BOX_LENGTH),
-            Coords(grid_pos.x + 2, grid_pos.y + 1)))
+        self.boxes.append(Box(x, y))
+        self.boxes.append(Box(x + 1, y))
+        self.boxes.append(Box(x - 1, y + 1))
+        self.boxes.append(Box(x, y + 1))
