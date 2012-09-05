@@ -29,6 +29,9 @@ def run():
     while 1:
         clock.tick(SPEED)
 
+        if tetris.is_game_over():
+            return
+
         key = None
 
         for event in pygame.event.get():

@@ -48,6 +48,12 @@ class Grid():
         else:
             self.active_shape.move_down()
 
+    def is_game_over(self):
+        for box in self.active_shape.boxes:
+            if self.grid[box.x][box.y]:
+                return 1
+        return 0
+
     def draw(self, screen):
         self.active_boxes.draw(screen)
         self.placed_boxes.draw(screen)
