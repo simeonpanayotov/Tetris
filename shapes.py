@@ -29,13 +29,13 @@ class Coords():
             self.x = args[0]
             self.y = args[1]
 
-    def addX(self, value):
+    def add_x(self, value):
         """
         Adds a value to the x coordinate.
         """
         self.x = self.x + value
 
-    def addY(self, value):
+    def add_y(self, value):
         """
         Adds a value to the y coordinate.
         """
@@ -57,16 +57,16 @@ class Box(pygame.sprite.Sprite):
         self.screen_pos_delta = Coords(0, 0)
 
     def move_down(self):
-        self.screen_pos_delta.addY(BOX_LENGTH)
-        self.grid_pos.addY(-1)
+        self.screen_pos_delta.add_y(BOX_LENGTH)
+        self.grid_pos.add_y(-1)
 
     def move_left(self):
-        self.screen_pos_delta.addX(-BOX_LENGTH)
-        self.grid_pos.addX(-1)
+        self.screen_pos_delta.add_x(-BOX_LENGTH)
+        self.grid_pos.add_x(-1)
 
     def move_right(self):
-        self.screen_pos_delta.addX(BOX_LENGTH)
-        self.grid_pos.addX(1)
+        self.screen_pos_delta.add_x(BOX_LENGTH)
+        self.grid_pos.add_x(1)
 
     def update(self):
         new_pos = self.rect.move(self.screen_pos_delta.to_tuple())
