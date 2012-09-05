@@ -49,6 +49,8 @@ def run():
                     active_shape.move_left()
                 elif event.key == K_RIGHT and tetris.can_shape_move_right(active_shape):
                     active_shape.move_right()
+                elif event.key == K_UP:
+                    active_shape.rotate(tetris.grid)
 
         active_shape.move_down()
 
