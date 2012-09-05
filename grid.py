@@ -37,6 +37,8 @@ class Grid():
                 self.active_shape.move_right()
             elif key == K_UP:
                 self.active_shape.rotate(self.grid)
+            elif key == K_SPACE:
+                self.place_active_shape()
 
         if self.is_shape_placed(self.active_shape):
             self.active_boxes.remove(self.active_shape.boxes)
@@ -53,6 +55,10 @@ class Grid():
             if self.grid[box.x][box.y]:
                 return 1
         return 0
+
+    def place_active_shape(self):
+        while not self.is_shape_placed(self.active_shape):
+            self.active_shape.move_down()
 
     def draw(self, screen):
         self.active_boxes.draw(screen)
