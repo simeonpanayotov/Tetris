@@ -48,7 +48,7 @@ class NextShapePanel:
             (4 * BOX_LENGTH, 4 * BOX_LENGTH))
         self._next_shape_panel.fill(PANEL_BG_COLOR)
         self.height = self._next_label_panel.height + \
-                      self._next_shape_panel.get_height()
+                      self._next_shape_panel.get_height() + 10
         self._panel = pygame.Surface((width, self.height))
 
         self.next_shape()
@@ -58,7 +58,7 @@ class NextShapePanel:
         self._next_label_panel.draw(self._panel, (0, 0))
         self._next_shape_panel.fill(PANEL_BG_COLOR)
         self._grid.draw(self._next_shape_panel)
-        self._panel.blit(self._next_shape_panel, (0, self._next_label_panel.height))
+        self._panel.blit(self._next_shape_panel, (10, self._next_label_panel.height + 10))
         surface.blit(self._panel, position)
 
     def next_shape(self):
