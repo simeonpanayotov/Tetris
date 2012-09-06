@@ -18,6 +18,7 @@ class Tetris:
         self._nextShapePanel = panels.NextShapePanel(
             PANEL_WIDTH, PANEL_HEIGHT,
             grids.SCREEN_WIDTH, 0)
+        self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
 
 
     def update(self):
@@ -32,5 +33,8 @@ class Tetris:
         return self._gameGrid.is_game_over()
 
     def tick(self, key):
+        if not self._gameGrid.has_active_shape:
+            self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
+
         self._gameGrid.tick(key)
 

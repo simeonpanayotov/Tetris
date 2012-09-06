@@ -9,6 +9,8 @@ class NextShapePanel():
         self._create_next_shape_panel()
         self._grid = grids.NextShapeGrid(4, 4)
 
+        self.next_shape()
+
     def _create_panel(self, width, height, x, y):
         self._panel = pygame.Surface((width, height))
         self._panel.fill(PANEL_BG_COLOR)

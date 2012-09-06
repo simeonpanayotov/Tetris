@@ -108,8 +108,9 @@ class GameGrid:
         while len(self.grid) < COLUMN_COUNT:
             self.grid.append([None] * ROW_COUNT)
 
-        active_shape = self.active_shape = self._add_new_shape()
-        self.active_boxes = pygame.sprite.RenderPlain(active_shape.boxes)
+        self.active_shape = None
+        self.has_active_shape = False
+        self.active_boxes = pygame.sprite.RenderPlain()
         self.placed_boxes = pygame.sprite.RenderPlain()
 
     def tick(self, key):
@@ -128,10 +129,8 @@ class GameGrid:
             self.placed_boxes.add(self.active_shape.boxes)
             self.mark_shape_place(self.active_shape)
             self.active_shape.clear_blocks()
-
-            self.active_shape = self._add_new_shape()
-            self.active_boxes.add(self.active_shape.boxes)
             self._collapse_blocks()
+            self.has_active_shape = False
         else:
             self.active_shape.move_down()
 
@@ -246,6 +245,13 @@ class GameGrid:
         self._place_shape_at_top(shape)
 
         return shape
+
+    def add_new_shape(self, shape):
+        self.active_shape = shape
+        self.active_boxes.add(shape.boxes)
+        self.has_active_shape = True
+
+#        self._place_shape_at_top()
 
     def _has_shape_block_above_top(self, shape):
         for block in shape.boxes:
