@@ -22,7 +22,7 @@ class Grid():
         """
         self.grid = []
 
-        for x in range(COLUMN_COUNT):
+        while len(self.grid) <= COLUMN_COUNT:
             self.grid.append([None] * ROW_COUNT)
 
         active_shape = self.active_shape = self._place_new_shape()
