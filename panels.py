@@ -36,7 +36,11 @@ class NextShapePanel():
         self._panel.blit(self._next_shape_panel, self._next_shape_panel_position)
 
     def next_shape(self):
-        """Creates a new shape and returns the previous one."""
+        """Creates a new shape and returns the previous one.
+        The method is called internally on init, so that
+        subsequent calls always return a shape.
+
+        """
         shape = self._grid.active_shape
         self._grid.create_new_shape()
         self._grid.update()

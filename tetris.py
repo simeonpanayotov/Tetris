@@ -18,8 +18,8 @@ class Tetris:
         self._nextShapePanel = panels.NextShapePanel(
             PANEL_WIDTH, PANEL_HEIGHT,
             grids.SCREEN_WIDTH, 0)
-        self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
 
+        self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
 
     def update(self):
         self._gameGrid.update()
