@@ -150,10 +150,11 @@ class Grid():
 
     def _add_new_shape(self):
         shape_type = random.choice(
-            [shapes.Bar])
+            [shapes.Square, shapes.Bar,
+             shapes.ZigZag, shapes.Cane])
         shape = shape_type(START_X, START_Y)
 
-        rotations_count = random.choice([1, 2])
+        rotations_count = random.choice(range(1, 5))
 
         while rotations_count > 0:
             shape.rotate(self.grid, False)
