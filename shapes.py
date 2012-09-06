@@ -1,7 +1,6 @@
 import os
 import pygame
-
-BOX_LENGTH = 30
+from constants import *
 
 def load_image(name):
     fullname = os.path.abspath(os.path.join("data", name))

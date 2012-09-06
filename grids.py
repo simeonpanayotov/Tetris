@@ -2,17 +2,7 @@ import shapes
 import random
 import pygame
 from pygame import *
-
-BOX_LENGTH = shapes.BOX_LENGTH
-COLUMN_COUNT = 10
-ROW_COUNT = COLUMN_COUNT * 2
-SCREEN_WIDTH = COLUMN_COUNT * BOX_LENGTH
-SCREEN_HEIGHT = SCREEN_WIDTH * 2
-
-START_X = COLUMN_COUNT // 2 - 1
-START_Y = 0
-START_POS_SCREEN = (START_X * BOX_LENGTH, START_Y)
-START_POS_GRID = [START_X, START_Y]
+from constants import *
 
 # TODO: Rename to Tetris and try renaming the module as well but not to Tetris.
 class Grid():

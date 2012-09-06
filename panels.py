@@ -1,12 +1,10 @@
 import pygame
-
-PANEL_HEIGHT_NEXT_SHAPE = 100
-BG_COLOR = (255, 127, 39)
+from constants import *
 
 class NextShapePanel():
     def __init__(self, width, height, x, y):
         self._panel = pygame.Surface((width, height))
-        self._panel.fill(BG_COLOR)
+        self._panel.fill(PANEL_BG_COLOR)
         self._position = (x, y)
 
         self._draw_text()

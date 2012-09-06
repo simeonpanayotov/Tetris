@@ -1,12 +1,7 @@
 import pygame
 import grids
 import panels
-
-TETRIS = "Tetris"
-BG_COLOR = (219, 203, 138)
-PANEL_WIDTH = 150
-PANEL_HEIGHT = 200
-WIDTH = grids.SCREEN_WIDTH + PANEL_WIDTH
+from constants import *
 
 class Tetris:
     def __init__(self):
