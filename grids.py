@@ -235,6 +235,8 @@ class GameGrid:
         self.active_boxes.add(shape.boxes)
         self.has_active_shape = True
 
+        shape.move_right_to_position(START_X)
+
     def _has_shape_block_above_top(self, shape):
         for block in shape.boxes:
             if block.y < 0:
