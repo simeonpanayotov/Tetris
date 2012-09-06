@@ -15,14 +15,11 @@ class Tetris:
         self._background.fill(BG_COLOR)
 
         self._gameGrid = grids.GameGrid()
-        self._nextShapePanel = panels.NextShapePanel(
-            PANEL_WIDTH, PANEL_HEIGHT,
-            grids.SCREEN_WIDTH, 0)
-
-        self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
-
+        self._next_shape_panel = panels.NextShapePanel(PANEL_WIDTH)
         self._panel_level = panels.LevelPanel(PANEL_WIDTH)
         self._panel_score = panels.ScorePanel(PANEL_WIDTH)
+
+        self._gameGrid.add_new_shape(self._next_shape_panel.next_shape())
 
     def update(self):
         self._gameGrid.update()
@@ -30,7 +27,7 @@ class Tetris:
     def draw(self):
         self._screen.blit(self._background, (0, 0))
         self._gameGrid.draw(self._screen)
-        self._nextShapePanel.draw(self._screen)
+        self._next_shape_panel.draw(self._screen, (grids.SCREEN_WIDTH, 0 ))
         self._panel_level.draw(self._screen, (grids.SCREEN_WIDTH, PANEL_HEIGHT))
         self._panel_score.draw(self._screen, (grids.SCREEN_WIDTH, PANEL_HEIGHT + self._panel_level.height))
 
@@ -41,5 +38,5 @@ class Tetris:
         self._gameGrid.tick(key)
 
         if not self._gameGrid.has_active_shape:
-            self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
+            self._gameGrid.add_new_shape(self._next_shape_panel.next_shape())
 
