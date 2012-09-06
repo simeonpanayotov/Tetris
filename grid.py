@@ -22,7 +22,7 @@ class Grid():
         """
         self.grid = []
 
-        while len(self.grid) <= COLUMN_COUNT:
+        while len(self.grid) < COLUMN_COUNT:
             self.grid.append([None] * ROW_COUNT)
 
         active_shape = self.active_shape = self._place_new_shape()
@@ -44,9 +44,11 @@ class Grid():
             self.active_boxes.remove(self.active_shape.boxes)
             self.placed_boxes.add(self.active_shape.boxes)
             self.mark_shape_place(self.active_shape)
+            self.active_shape.clear_blocks()
 
             self.active_shape = self._place_new_shape()
             self.active_boxes.add(self.active_shape.boxes)
+            self._collapse_blocks()
         else:
             self.active_shape.move_down()
 
@@ -105,9 +107,50 @@ class Grid():
                 return 0
         return 1
 
+    def _get_blocks(self, row_index):
+        blocks = []
+        for column_index in range(COLUMN_COUNT):
+            block = self.grid[column_index][row_index]
+
+            if block:
+                blocks.append(block)
+
+        return blocks
+
+    def _remove_placed_blocks(self, blocks):
+        for block in blocks:
+            self.grid[block.x][block.y] = None
+
+        self.placed_boxes.remove(blocks)
+
+    def _move_above_blocks_down(self, start_row_index):
+        for column_index in range(COLUMN_COUNT):
+            row_index = start_row_index
+            while row_index >= 0:
+                block = self.grid[column_index][row_index]
+
+                if block:
+                    block.move_down()
+                    self.grid[column_index][row_index] = None
+                    self.grid[block.x][block.y] = block
+
+                row_index -= 1
+
+    def _collapse_blocks(self):
+        row_index = 0
+
+        while row_index <= ROW_COUNT - 1:
+            blocks = self._get_blocks(row_index)
+
+            if len(blocks) == COLUMN_COUNT:
+                self._remove_placed_blocks(blocks)
+                self._move_above_blocks_down(row_index - 1)
+
+            row_index += 1
+
     def _place_new_shape(self):
         shape_type = random.choice(
-            [shapes.Bar, shapes.Square,
-             shapes.Cane, shapes.ZigZag])
+            [shapes.Square, shapes.Bar,
+             shapes.ZigZag, shapes.Cane])
 
         return shape_type(START_X, START_Y)

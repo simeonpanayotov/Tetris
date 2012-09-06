@@ -54,6 +54,9 @@ class Shape():
         for box in self.boxes:
             box.move_right()
 
+    def clear_blocks(self):
+        self.boxes = []
+
     def rotate(self, grid):
         transform = self._get_next_transform()
         self._rotate(transform)
