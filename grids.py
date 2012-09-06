@@ -230,28 +230,10 @@ class GameGrid:
 
             row_index += 1
 
-    def _add_new_shape(self):
-        shape_type = random.choice(
-            [shapes.Square, shapes.Bar,
-             shapes.ZigZag, shapes.Cane])
-        shape = shape_type(START_X, START_Y)
-
-        rotations_count = random.choice(range(1, 5))
-
-        while rotations_count > 0:
-            shape.rotate(self.grid, False)
-            rotations_count -= 1
-
-        self._place_shape_at_top(shape)
-
-        return shape
-
     def add_new_shape(self, shape):
         self.active_shape = shape
         self.active_boxes.add(shape.boxes)
         self.has_active_shape = True
-
-#        self._place_shape_at_top()
 
     def _has_shape_block_above_top(self, shape):
         for block in shape.boxes:

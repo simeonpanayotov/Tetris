@@ -33,8 +33,8 @@ class Tetris:
         return self._gameGrid.is_game_over()
 
     def tick(self, key):
+        self._gameGrid.tick(key)
+
         if not self._gameGrid.has_active_shape:
             self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
-
-        self._gameGrid.tick(key)
 
