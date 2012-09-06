@@ -21,6 +21,9 @@ class Tetris:
 
         self._gameGrid.add_new_shape(self._nextShapePanel.next_shape())
 
+        self._panel_level = panels.LevelPanel(PANEL_WIDTH)
+        self._panel_score = panels.ScorePanel(PANEL_WIDTH)
+
     def update(self):
         self._gameGrid.update()
 
@@ -28,6 +31,8 @@ class Tetris:
         self._screen.blit(self._background, (0, 0))
         self._gameGrid.draw(self._screen)
         self._nextShapePanel.draw(self._screen)
+        self._panel_level.draw(self._screen, (grids.SCREEN_WIDTH, PANEL_HEIGHT))
+        self._panel_score.draw(self._screen, (grids.SCREEN_WIDTH, PANEL_HEIGHT + self._panel_level.height))
 
     def is_game_over(self):
         return self._gameGrid.is_game_over()
