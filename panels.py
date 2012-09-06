@@ -84,6 +84,9 @@ class LevelPanel:
         self.height = self._level_label_panel.height + self._level_value_panel.height
         self._panel = pygame.Surface((width, self.height))
 
+    def update(self, level):
+        self._level_value_panel.value = level
+
     def draw(self, surface, position):
         self._level_label_panel.draw(self._panel, (0, 0))
         self._level_value_panel.draw(self._panel, (0, self._level_label_panel.height))
@@ -100,6 +103,9 @@ class ScorePanel:
         self._score_value_panel = ValuePanel(width, 0)
         self.height = self._score_label_panel.height + self._score_value_panel.height
         self._panel = pygame.Surface((width, self.height))
+
+    def update(self, score):
+        self._score_value_panel.value = score
 
     def draw(self, surface, position):
         self._score_label_panel.draw(self._panel, (0, 0))
