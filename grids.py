@@ -61,16 +61,23 @@ class NextShapeGrid(Grid):
         Grid.__init__(self, row_count, column_count)
 
     def create_new_shape(self):
-        """Creates a new shape and places it at the top left corner."""
+        """Creates a new shape and places it at the top left corner.
+        The previous shape is cleared.
+
+        """
+        self._clear()
+
         shape = self._create_new_shape()
         self._move_shape_to_left(shape)
         self._move_shape_to_top(shape)
         self.active_shape = shape
         self._active_boxes.add(shape.boxes)
 
-    def clear(self):
+    def _clear(self):
         """Clears the grid from all blocks/shapes currently in it."""
-        pass
+        if self.active_shape:
+            self._active_boxes.remove(self.active_shape.boxes)
+            self.active_shape = None
 
     def _has_shape_block_outside_left(self, shape):
         for block in shape.boxes:
