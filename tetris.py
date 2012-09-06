@@ -15,11 +15,9 @@ class Tetris:
         self._background.fill(BG_COLOR)
 
         self._gameGrid = grids.GameGrid()
-        self._next_shape_panel = panels.NextShapePanel(PANEL_WIDTH)
-        self._panel_level = panels.LevelPanel(PANEL_WIDTH)
-        self._panel_score = panels.ScorePanel(PANEL_WIDTH)
+        self._control_panel = panels.ControlPanel(PANEL_WIDTH, SCREEN_HEIGHT)
 
-        self._gameGrid.add_new_shape(self._next_shape_panel.next_shape())
+        self._gameGrid.add_new_shape(self._control_panel.next_shape())
         self._collapsed_row_count = 0
         self.level = 4
 
@@ -46,20 +44,18 @@ class Tetris:
 
         if self._collapsed_row_count:
             score = self._get_score()
-            old_score = self._panel_score.get_score()
-            self._panel_score.add_score(score)
-            new_score = self._panel_score.get_score()
+            old_score = self._control_panel.get_score()
+            self._control_panel.add_score(score)
+            new_score = self._control_panel.get_score()
 
             if self._has_leveled_up(new_score, old_score):
-                self._panel_level.increase_level()
+                self._control_panel.increase_level()
                 self.level += 1
 
     def draw(self):
         self._screen.blit(self._background, (0, 0))
         self._gameGrid.draw(self._screen)
-        self._next_shape_panel.draw(self._screen, (grids.SCREEN_WIDTH, 0 ))
-        self._panel_level.draw(self._screen, (grids.SCREEN_WIDTH, PANEL_HEIGHT))
-        self._panel_score.draw(self._screen, (grids.SCREEN_WIDTH, PANEL_HEIGHT + self._panel_level.height))
+        self._control_panel.draw(self._screen, (grids.SCREEN_WIDTH, 0))
 
     def is_game_over(self):
         return self._gameGrid.is_game_over()
@@ -68,5 +64,5 @@ class Tetris:
         self._collapsed_row_count = self._gameGrid.tick(key)
 
         if not self._gameGrid.has_active_shape:
-            self._gameGrid.add_new_shape(self._next_shape_panel.next_shape())
+            self._gameGrid.add_new_shape(self._control_panel.next_shape())
 

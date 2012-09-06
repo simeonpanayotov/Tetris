@@ -112,6 +112,39 @@ class ScorePanel:
 
     def draw(self, surface, position):
         self._score_label_panel.draw(self._panel, (0, 0))
-        self._score_value_panel.draw(self._panel, (0, self._score_label_panel.height))
+        self._score_value_panel.draw(
+            self._panel, (0, self._score_label_panel.height))
+        surface.blit(self._panel, position)
+
+class ControlPanel:
+    def __init__(self, width, height):
+        """Creates a panel with the controls for:
+        next shape, level and score.
+
+        """
+        self._next_shape_panel = NextShapePanel(PANEL_WIDTH)
+        self._panel_level = LevelPanel(PANEL_WIDTH)
+        self._panel_score = ScorePanel(PANEL_WIDTH)
+        self._panel = pygame.Surface((width, height))
+        self._panel.fill(PANEL_BG_COLOR)
+
+    def next_shape(self):
+        return self._next_shape_panel.next_shape()
+
+    def get_score(self):
+        return self._panel_score.get_score()
+
+    def add_score(self, value):
+        self._panel_score.add_score(value)
+
+    def increase_level(self):
+        self._panel_level.increase_level()
+
+    def draw(self, surface, position):
+        self._next_shape_panel.draw(self._panel, (0, 0))
+        panel_level_height = self._next_shape_panel.height
+        self._panel_level.draw(self._panel, (0,panel_level_height))
+        panel_score_height = panel_level_height + self._panel_level.height
+        self._panel_score.draw(self._panel, (0,panel_score_height))
         surface.blit(self._panel, position)
 
