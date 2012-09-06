@@ -21,6 +21,7 @@ def run():
     tetris = grid.Grid()
 
     screen.blit(background, (0, 0))
+    tetris.update()
     tetris.draw(screen)
     pygame.display.flip()
 
