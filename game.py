@@ -13,9 +13,6 @@ def run():
     while 1:
         clock.tick(game.level)
 
-        if game.is_game_over():
-            return
-
         key = None
 
         for event in pygame.event.get():
@@ -24,10 +21,13 @@ def run():
             elif event.type == KEYDOWN:
                 key = event.key
 
-        game.tick(key)
-        game.update()
-        game.draw()
-        pygame.display.flip()
+        if game.is_game_over():
+            pygame.display.flip()
+        else:
+            game.tick(key)
+            game.update()
+            game.draw()
+            pygame.display.flip()
 
 if __name__ == "__main__":
     run()

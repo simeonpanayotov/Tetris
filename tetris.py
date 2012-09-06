@@ -52,10 +52,21 @@ class Tetris:
                 self._control_panel.increase_level()
                 self.level += 1
 
+    def _draw_game_over_text(self, surface):
+        font = pygame.font.Font(None, 66)
+
+        text = font.render("GAME OVER", 1, (10, 10, 10))
+        textpos = text.get_rect(topleft=(10, SCREEN_HEIGHT / 2))
+
+        surface.blit(text, textpos)
+
     def draw(self):
         self._screen.blit(self._background, (0, 0))
         self._gameGrid.draw(self._screen)
         self._control_panel.draw(self._screen, (grids.SCREEN_WIDTH, 0))
+
+        if self._gameGrid.is_game_over():
+            self._draw_game_over_text(self._screen)
 
     def is_game_over(self):
         return self._gameGrid.is_game_over()
