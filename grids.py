@@ -4,7 +4,94 @@ import pygame
 from pygame import *
 from constants import *
 
-class GameGrid():
+class Grid:
+    """A Base class for all grids used in the game."""
+    def __init__(self, row_count, column_count):
+        self.grid = []
+        self._row_count = row_count
+        self._column_count = column_count
+        self.active_shape = None
+        self._active_boxes = pygame.sprite.RenderPlain()
+
+        while len(self.grid) < column_count:
+            self.grid.append([None] * row_count)
+
+    def draw(self, screen):
+        self._active_boxes.draw(screen)
+
+    def update(self):
+        self._active_boxes.update()
+
+    def _has_shape_block_outside_top(self, shape):
+        for block in shape.boxes:
+            if block.y < 0:
+                return True
+        return False
+
+    def _has_shape_block_at_top(self, shape):
+        for block in shape.boxes:
+            if block.y == 0:
+                return True
+        return False
+
+    def _move_shape_to_top(self, shape):
+        while self._has_shape_block_outside_top(shape):
+            shape.move_down()
+
+        while not self._has_shape_block_at_top(shape):
+            shape.move_up()
+
+    def _create_new_shape(self):
+        shape_type = random.choice(
+            [shapes.Square, shapes.Bar,
+             shapes.ZigZag, shapes.Cane])
+        shape = shape_type(START_X, START_Y)
+
+        rotations_count = random.choice(range(1, 5))
+
+        while rotations_count > 0:
+            shape.rotate(self.grid, False)
+            rotations_count -= 1
+
+        return shape
+
+class NextShapeGrid(Grid):
+    """A grid used to display the next shape."""
+    def __init__(self, row_count, column_count):
+        Grid.__init__(self, row_count, column_count)
+
+    def create_new_shape(self):
+        """Creates a new shape and places it at the top left corner."""
+        shape = self._create_new_shape()
+        self._move_shape_to_left(shape)
+        self._move_shape_to_top(shape)
+        self.active_shape = shape
+        self._active_boxes.add(shape.boxes)
+
+    def clear(self):
+        """Clears the grid from all blocks/shapes currently in it."""
+        pass
+
+    def _has_shape_block_outside_left(self, shape):
+        for block in shape.boxes:
+            if block.x < 0:
+                return True
+        return False
+
+    def _has_shape_block_at_left(self, shape):
+        for block in shape.boxes:
+            if block.x == 0:
+                return True
+        return False
+
+    def _move_shape_to_left(self, shape):
+        while self._has_shape_block_outside_left(shape):
+            shape.move_right()
+
+        while not self._has_shape_block_at_left(shape):
+            shape.move_left()
+
+class GameGrid:
     def __init__(self):
         """
         Create the grid that represents the Tetris logical surface.
