@@ -2,8 +2,6 @@ import pygame
 from pygame.locals import *
 import tetris
 
-SPEED = 5
-
 def run():
     pygame.init()
     game = tetris.Tetris()
@@ -13,7 +11,7 @@ def run():
     clock = pygame.time.Clock()
 
     while 1:
-        clock.tick(SPEED)
+        clock.tick(game.level)
 
         if game.is_game_over():
             return

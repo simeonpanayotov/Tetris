@@ -5,7 +5,7 @@ from constants import *
 
 class Tetris:
     def __init__(self):
-    # Create the game window.
+        # Create the game window.
         self._screen = pygame.display.set_mode((WIDTH, grids.SCREEN_HEIGHT))
         pygame.display.set_caption(TETRIS)
 
@@ -20,9 +20,39 @@ class Tetris:
         self._panel_score = panels.ScorePanel(PANEL_WIDTH)
 
         self._gameGrid.add_new_shape(self._next_shape_panel.next_shape())
+        self._collapsed_row_count = 0
+        self.level = 4
+
+    def _get_score(self):
+        score = 200
+
+        if self._collapsed_row_count == 2:
+            score += 10
+        elif self._collapsed_row_count == 3:
+            score += 30
+        elif self._collapsed_row_count == 4:
+            score += 60
+
+        return score
+
+    def _has_leveled_up(self, new_score, old_score):
+        new_score //= 1000
+        old_score //= 1000
+
+        return new_score > old_score
 
     def update(self):
         self._gameGrid.update()
+
+        if self._collapsed_row_count:
+            score = self._get_score()
+            old_score = self._panel_score.get_score()
+            self._panel_score.add_score(score)
+            new_score = self._panel_score.get_score()
+
+            if self._has_leveled_up(new_score, old_score):
+                self._panel_level.increase_level()
+                self.level += 1
 
     def draw(self):
         self._screen.blit(self._background, (0, 0))
@@ -35,7 +65,7 @@ class Tetris:
         return self._gameGrid.is_game_over()
 
     def tick(self, key):
-        self._gameGrid.tick(key)
+        self._collapsed_row_count = self._gameGrid.tick(key)
 
         if not self._gameGrid.has_active_shape:
             self._gameGrid.add_new_shape(self._next_shape_panel.next_shape())

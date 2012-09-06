@@ -129,10 +129,13 @@ class GameGrid:
             self.placed_boxes.add(self.active_shape.boxes)
             self.mark_shape_place(self.active_shape)
             self.active_shape.clear_blocks()
-            self._collapse_blocks()
             self.has_active_shape = False
+
+            return self._collapse_blocks()
         else:
             self.active_shape.move_down()
+
+        return 0
 
     def is_game_over(self):
         for box in self.active_shape.boxes:
@@ -220,6 +223,7 @@ class GameGrid:
 
     def _collapse_blocks(self):
         row_index = 0
+        collapsed_row_count = 0
 
         while row_index <= ROW_COUNT - 1:
             blocks = self._get_blocks(row_index)
@@ -227,8 +231,11 @@ class GameGrid:
             if len(blocks) == COLUMN_COUNT:
                 self._remove_placed_blocks(blocks)
                 self._move_above_blocks_down(row_index - 1)
+                collapsed_row_count += 1
 
             row_index += 1
+
+        return collapsed_row_count
 
     def add_new_shape(self, shape):
         self.active_shape = shape
