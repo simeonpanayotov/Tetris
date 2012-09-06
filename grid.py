@@ -25,7 +25,7 @@ class Grid():
         while len(self.grid) < COLUMN_COUNT:
             self.grid.append([None] * ROW_COUNT)
 
-        active_shape = self.active_shape = self._place_new_shape()
+        active_shape = self.active_shape = self._add_new_shape()
         self.active_boxes = pygame.sprite.RenderPlain(active_shape.boxes)
         self.placed_boxes = pygame.sprite.RenderPlain()
 
@@ -46,7 +46,7 @@ class Grid():
             self.mark_shape_place(self.active_shape)
             self.active_shape.clear_blocks()
 
-            self.active_shape = self._place_new_shape()
+            self.active_shape = self._add_new_shape()
             self.active_boxes.add(self.active_shape.boxes)
             self._collapse_blocks()
         else:
@@ -148,9 +148,36 @@ class Grid():
 
             row_index += 1
 
-    def _place_new_shape(self):
+    def _add_new_shape(self):
         shape_type = random.choice(
-            [shapes.Square, shapes.Bar,
-             shapes.ZigZag, shapes.Cane])
+            [shapes.Bar])
+        shape = shape_type(START_X, START_Y)
 
-        return shape_type(START_X, START_Y)
+        rotations_count = random.choice([1, 2])
+
+        while rotations_count > 0:
+            shape.rotate(self.grid, False)
+            rotations_count -= 1
+
+        self._place_shape_at_top(shape)
+
+        return shape
+
+    def _has_shape_block_above_top(self, shape):
+        for block in shape.boxes:
+            if block.y < 0:
+                return True
+        return False
+
+    def _has_shape_block_at_top(self, shape):
+        for block in shape.boxes:
+            if block.y == 0:
+                return True
+        return False
+
+    def _place_shape_at_top(self, shape):
+        while self._has_shape_block_above_top(shape):
+            shape.move_down()
+
+        while not self._has_shape_block_at_top(shape):
+            shape.move_up()
