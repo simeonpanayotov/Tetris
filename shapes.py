@@ -35,6 +35,9 @@ class Box(pygame.sprite.Sprite):
     def move_right(self):
         self.x += 1
 
+    def move_up(self):
+        self.y -= 1
+
     def update(self):
         self.rect.topleft = (self.x * BOX_LENGTH, self.y * BOX_LENGTH)
 
@@ -54,14 +57,18 @@ class Shape():
         for box in self.boxes:
             box.move_right()
 
+    def move_up(self):
+        for box in self.boxes:
+            box.move_up()
+
     def clear_blocks(self):
         self.boxes = []
 
-    def rotate(self, grid):
+    def rotate(self, grid, validate_new_position=True):
         transform = self._get_next_transform()
         self._rotate(transform)
 
-        if self._is_position_valid(grid):
+        if not validate_new_position or self._is_position_valid(grid):
             self._confirm_next_position()
         else:
             transform = self._negate_transform(transform)
