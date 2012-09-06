@@ -43,6 +43,7 @@ class Box(pygame.sprite.Sprite):
 class Shape():
     def __init__(self):
         self.boxes = []
+        self._center_block = None
 
     def move_down(self):
         for box in self.boxes:
@@ -62,6 +63,11 @@ class Shape():
 
     def clear_blocks(self):
         self.boxes = []
+        self._center_block = None
+
+    def move_right_to_position(self, x):
+        while self._center_block.x != x:
+            self.move_right()
 
     def rotate(self, grid, validate_new_position=True):
         transform = self._get_next_transform()
@@ -118,6 +124,8 @@ class Square(Shape):
         # lower right
         self.boxes.append(Box(x + 1, y + 1))
 
+        self._center_block = self.boxes[0]
+
 class VerticalShape(Shape):
     def __init__(self):
         Shape.__init__(self)
@@ -154,6 +162,16 @@ class Bar(VerticalShape):
         self.boxes.append(Box(x, y + 2))
         self.boxes.append(Box(x, y + 3))
 
+        self._center_block = self.boxes[0]
+
+    def _confirm_next_position(self):
+        VerticalShape._confirm_next_position(self)
+
+        if self.vertical:
+            self._center_block = self.boxes[0]
+        else:
+            self._center_block = self.boxes[1]
+
     def _get_next_transform(self):
         if self.vertical:
             return Bar._horizontal_transform
@@ -185,6 +203,16 @@ class ZigZag(VerticalShape):
         self.boxes.append(Box(x + 1, y))
         self.boxes.append(Box(x - 1, y + 1))
         self.boxes.append(Box(x, y + 1))
+
+        self._center_block = self.boxes[0]
+
+    def _confirm_next_position(self):
+        VerticalShape._confirm_next_position(self)
+
+        if self.vertical:
+            self._center_block = self.boxes[3]
+        else:
+            self._center_block = self.boxes[0]
 
     def _get_next_transform(self):
         if self.vertical:
@@ -231,6 +259,16 @@ class Cane(Shape):
         self.boxes.append(Box(x, y + 1))
         self.boxes.append(Box(x, y + 2))
 
+        self._center_block = self.boxes[0]
+
+    def _confirm_next_position(self):
+        self._position = self._get_next_position()
+
+        if self._position == 0 or self._position == 2:
+            self._center_block = self.boxes[0]
+        elif self._position == 1 or self._position == 3:
+            self._center_block = self.boxes[2]
+
     def _get_next_transform(self):
         next_position = self._get_next_position()
 
@@ -250,6 +288,3 @@ class Cane(Shape):
             next_position = 0
 
         return next_position
-
-    def _confirm_next_position(self):
-        self._position = self._get_next_position()
