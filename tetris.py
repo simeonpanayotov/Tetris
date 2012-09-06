@@ -14,7 +14,7 @@ class Tetris:
         self._background = self._background.convert()
         self._background.fill(BG_COLOR)
 
-        self._gameGrid = grids.Grid()
+        self._gameGrid = grids.GameGrid()
         self._nextShapePanel = panels.NextShapePanel(
             PANEL_WIDTH, PANEL_HEIGHT,
             grids.SCREEN_WIDTH, 0)

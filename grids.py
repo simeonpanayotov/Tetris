@@ -4,8 +4,7 @@ import pygame
 from pygame import *
 from constants import *
 
-# TODO: Rename to Tetris and try renaming the module as well but not to Tetris.
-class Grid():
+class GameGrid():
     def __init__(self):
         """
         Create the grid that represents the Tetris logical surface.
