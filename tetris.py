@@ -1,52 +1,32 @@
 import pygame
-from pygame.locals import *
 import grid
 
 TETRIS = "Tetris"
-SPEED = 5
 BG_COLOR = (219, 203, 138)
 
-def run():
-    pygame.init()
-
+class Tetris:
+    def __init__(self):
     # Create the game window.
-    screen = pygame.display.set_mode((grid.SCREEN_WIDTH, grid.SCREEN_HEIGHT))
-    pygame.display.set_caption(TETRIS)
+        self._screen = pygame.display.set_mode((grid.SCREEN_WIDTH, grid.SCREEN_HEIGHT))
+        pygame.display.set_caption(TETRIS)
 
-    # Create the background surface.
-    background = pygame.Surface(screen.get_size())
-    background = background.convert()
-    background.fill(BG_COLOR)
+        # Create the background surface.
+        self._background = pygame.Surface(self._screen.get_size())
+        self._background = self._background.convert()
+        self._background.fill(BG_COLOR)
 
-    tetris = grid.Grid()
+        self._gameGrid = grid.Grid()
 
-    screen.blit(background, (0, 0))
-    tetris.update()
-    tetris.draw(screen)
-    pygame.display.flip()
+    def update(self):
+        self._gameGrid.update()
 
-    clock = pygame.time.Clock()
+    def draw(self):
+        self._screen.blit(self._background, (0, 0))
+        self._gameGrid.draw(self._screen)
 
-    while 1:
-        clock.tick(SPEED)
+    def is_game_over(self):
+        return self._gameGrid.is_game_over()
 
-        if tetris.is_game_over():
-            return
+    def tick(self, key):
+        self._gameGrid.tick(key)
 
-        key = None
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                return
-            elif event.type == KEYDOWN:
-                key = event.key
-
-        tetris.tick(key)
-
-        screen.blit(background, (0, 0))
-        tetris.update()
-        tetris.draw(screen)
-        pygame.display.flip()
-
-if __name__ == "__main__":
-    run()
