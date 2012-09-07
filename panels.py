@@ -41,7 +41,7 @@ class ValuePanel:
 
 class NextShapePanel:
     def __init__(self, width):
-        self._grid = grids.NextShapeGrid(4, 4)
+        self._grid = grids.NextShapeGrid()
 
         self._next_label_panel = LabelPanel(width, "Next:")
         self._next_shape_panel = pygame.Surface(
@@ -53,6 +53,18 @@ class NextShapePanel:
 
         self.next_shape()
 
+    def next_shape(self):
+        """Creates a new shape and returns the previous one.
+        The method is called internally on init, so that
+        subsequent calls always return a shape.
+
+        """
+        shape = self._grid._active_shape
+        self._grid.create_new_shape()
+        self._grid.update()
+
+        return shape
+
     def draw(self, surface, position):
         self._panel.fill(PANEL_BG_COLOR)
         self._next_label_panel.draw(self._panel, (0, 0))
@@ -60,18 +72,6 @@ class NextShapePanel:
         self._grid.draw(self._next_shape_panel)
         self._panel.blit(self._next_shape_panel, (10, self._next_label_panel.height + 10))
         surface.blit(self._panel, position)
-
-    def next_shape(self):
-        """Creates a new shape and returns the previous one.
-        The method is called internally on init, so that
-        subsequent calls always return a shape.
-
-        """
-        shape = self._grid.active_shape
-        self._grid.create_new_shape()
-        self._grid.update()
-
-        return shape
 
 class LevelPanel:
     def __init__(self, width):

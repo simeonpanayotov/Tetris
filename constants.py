@@ -1,4 +1,7 @@
 # Shape constants
+IMAGES = "images"
+CANNOT_LOAD_IMAGE = "Cannot load image:"
+BRICK_PNG = "brick.png"
 BOX_LENGTH = 30
 
 # Grid constants

@@ -3,24 +3,31 @@ import pygame
 from constants import *
 
 def load_image(name):
-    fullname = os.path.abspath(os.path.join("data", name))
-#    TODO: Fix the exception handling/raising code.
-#    try:
-    image = pygame.image.load(fullname)
-#    except pygame.error as err:
-#        print ('Cannot load image:', name)
-#        raise SystemExit(err.args)
+    fullname = os.path.abspath(os.path.join(IMAGES, name))
+
+    try:
+        image = pygame.image.load(fullname)
+    except pygame.error as err:
+        print(CANNOT_LOAD_IMAGE, name)
+        raise SystemExit(err.args)
+
     image = image.convert()
     scaled_image = pygame.Surface((BOX_LENGTH, BOX_LENGTH))
     pygame.transform.scale(image, (BOX_LENGTH, BOX_LENGTH), scaled_image)
 
     return scaled_image, scaled_image.get_rect()
 
-class Box(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self) # Call Sprite initializer.
+class Block(pygame.sprite.Sprite):
+    """Represents a block of which the various Tetris shapes
+    are built from. Blocks are sprites and have a pari of coordinates,
+    which represent their position in an arbitrary grid.
 
-        self.image, self.rect = load_image("brick.png")
+    """
+    def __init__(self, x, y):
+        """Creates a block on a given position."""
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image, self.rect = load_image(BRICK_PNG)
         self.rect.topleft = (x * BOX_LENGTH, y * BOX_LENGTH)
         self.x = x
         self.y = y
@@ -42,27 +49,58 @@ class Box(pygame.sprite.Sprite):
 
 class Shape():
     def __init__(self):
-        self.boxes = []
+        self.blocks = []
         self._center_block = None
 
+    def _get_next_transform(self):
+        return {}
+
+    def _confirm_next_position(self):
+        pass
+
+    def _is_position_valid(self, grid):
+        column_count = len(grid)
+        row_count = len(grid[0])
+
+        for box in self.blocks:
+            if box.x < 0 or box.x >= column_count or\
+               box.y >= row_count or\
+               grid[box.x][box.y]:
+                return 0
+        return 1
+
+    def _negate_transform(self, transform):
+        negated_transform = {}
+
+        for key in transform:
+            negated_transform[key] = (transform[key][0] * -1,
+                                      transform[key][1] * -1)
+
+        return negated_transform
+
+    def _rotate(self, transform):
+        for key in transform:
+            self.blocks[key].x += transform[key][0]
+            self.blocks[key].y += transform[key][1]
+
     def move_down(self):
-        for box in self.boxes:
-            box.move_down()
+        for block in self.blocks:
+            block.move_down()
 
     def move_left(self):
-        for box in self.boxes:
-            box.move_left()
+        for block in self.blocks:
+            block.move_left()
 
     def move_right(self):
-        for box in self.boxes:
-            box.move_right()
+        for block in self.blocks:
+            block.move_right()
 
     def move_up(self):
-        for box in self.boxes:
-            box.move_up()
+        for block in self.blocks:
+            block.move_up()
 
     def clear_blocks(self):
-        self.boxes = []
+        self.blocks = []
         self._center_block = None
 
     def move_right_to_position(self, x):
@@ -79,52 +117,20 @@ class Shape():
             transform = self._negate_transform(transform)
             self._rotate(transform)
 
-    def _get_next_transform(self):
-        return {}
-
-    def _confirm_next_position(self):
-        pass
-
-    def _is_position_valid(self, grid):
-        column_count = len(grid)
-        row_count = len(grid[0])
-
-        for box in self.boxes:
-            if box.x < 0 or box.x >= column_count or\
-               box.y >= row_count or\
-               grid[box.x][box.y]:
-                return 0
-
-        return 1
-
-    def _negate_transform(self, transform):
-        negated_transform = {}
-
-        for key in transform:
-            negated_transform[key] = (transform[key][0] * -1,
-                                      transform[key][1] * -1)
-
-        return negated_transform
-
-    def _rotate(self, transform):
-        for key in transform:
-            self.boxes[key].x += transform[key][0]
-            self.boxes[key].y += transform[key][1]
-
 class Square(Shape):
     def __init__(self, x, y):
         Shape.__init__(self)
 
         # upper left
-        self.boxes.append(Box(x, y))
+        self.blocks.append(Block(x, y))
         # upper right
-        self.boxes.append(Box(x + 1, y))
+        self.blocks.append(Block(x + 1, y))
         # lower left
-        self.boxes.append(Box(x, y + 1))
+        self.blocks.append(Block(x, y + 1))
         # lower right
-        self.boxes.append(Box(x + 1, y + 1))
+        self.blocks.append(Block(x + 1, y + 1))
 
-        self._center_block = self.boxes[0]
+        self._center_block = self.blocks[0]
 
 class VerticalShape(Shape):
     def __init__(self):
@@ -134,7 +140,7 @@ class VerticalShape(Shape):
         pass
 
     def _confirm_next_position(self):
-        self.vertical = not self.vertical
+        self._vertical = not self._vertical
 
 class Bar(VerticalShape):
     #TODO: check conventions!!!
@@ -155,25 +161,25 @@ class Bar(VerticalShape):
     def __init__(self, x, y):
         VerticalShape.__init__(self)
 
-        self.vertical = True
+        self._vertical = True
 
-        self.boxes.append(Box(x, y))
-        self.boxes.append(Box(x, y + 1))
-        self.boxes.append(Box(x, y + 2))
-        self.boxes.append(Box(x, y + 3))
+        self.blocks.append(Block(x, y))
+        self.blocks.append(Block(x, y + 1))
+        self.blocks.append(Block(x, y + 2))
+        self.blocks.append(Block(x, y + 3))
 
-        self._center_block = self.boxes[0]
+        self._center_block = self.blocks[0]
 
     def _confirm_next_position(self):
         VerticalShape._confirm_next_position(self)
 
-        if self.vertical:
-            self._center_block = self.boxes[0]
+        if self._vertical:
+            self._center_block = self.blocks[0]
         else:
-            self._center_block = self.boxes[1]
+            self._center_block = self.blocks[1]
 
     def _get_next_transform(self):
-        if self.vertical:
+        if self._vertical:
             return Bar._horizontal_transform
         else:
             return Bar._vertical_transform
@@ -197,25 +203,25 @@ class ZigZag(VerticalShape):
     def __init__(self, x, y):
         VerticalShape.__init__(self)
 
-        self.vertical = False
+        self._vertical = False
 
-        self.boxes.append(Box(x, y))
-        self.boxes.append(Box(x + 1, y))
-        self.boxes.append(Box(x - 1, y + 1))
-        self.boxes.append(Box(x, y + 1))
+        self.blocks.append(Block(x, y))
+        self.blocks.append(Block(x + 1, y))
+        self.blocks.append(Block(x - 1, y + 1))
+        self.blocks.append(Block(x, y + 1))
 
-        self._center_block = self.boxes[0]
+        self._center_block = self.blocks[0]
 
     def _confirm_next_position(self):
         VerticalShape._confirm_next_position(self)
 
-        if self.vertical:
-            self._center_block = self.boxes[3]
+        if self._vertical:
+            self._center_block = self.blocks[3]
         else:
-            self._center_block = self.boxes[0]
+            self._center_block = self.blocks[0]
 
     def _get_next_transform(self):
-        if self.vertical:
+        if self._vertical:
             return ZigZag._horizontal_transform
         else:
             return ZigZag._vertical_transform
@@ -254,20 +260,20 @@ class Cane(Shape):
 
         self._position = 0
 
-        self.boxes.append(Box(x, y))
-        self.boxes.append(Box(x + 1, y))
-        self.boxes.append(Box(x, y + 1))
-        self.boxes.append(Box(x, y + 2))
+        self.blocks.append(Block(x, y))
+        self.blocks.append(Block(x + 1, y))
+        self.blocks.append(Block(x, y + 1))
+        self.blocks.append(Block(x, y + 2))
 
-        self._center_block = self.boxes[0]
+        self._center_block = self.blocks[0]
 
     def _confirm_next_position(self):
         self._position = self._get_next_position()
 
         if self._position == 0 or self._position == 2:
-            self._center_block = self.boxes[0]
+            self._center_block = self.blocks[0]
         elif self._position == 1 or self._position == 3:
-            self._center_block = self.boxes[2]
+            self._center_block = self.blocks[2]
 
     def _get_next_transform(self):
         next_position = self._get_next_position()

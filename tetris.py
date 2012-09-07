@@ -6,7 +6,7 @@ from constants import *
 class Tetris:
     def __init__(self):
         # Create the game window.
-        self._screen = pygame.display.set_mode((WIDTH, grids.SCREEN_HEIGHT))
+        self._screen = pygame.display.set_mode((WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption(TETRIS)
 
         # Create the background surface.
@@ -39,6 +39,23 @@ class Tetris:
 
         return new_score > old_score
 
+    def _draw_game_over_text(self, surface):
+        font = pygame.font.Font(None, 66)
+
+        text = font.render("GAME OVER", 1, (10, 10, 10))
+        textpos = text.get_rect(topleft=(10, SCREEN_HEIGHT / 2))
+
+        surface.blit(text, textpos)
+
+    def is_game_over(self):
+        return self._gameGrid.is_game_over()
+
+    def tick(self, key):
+        self._collapsed_row_count = self._gameGrid.tick(key)
+
+        if not self._gameGrid.has_active_shape:
+            self._gameGrid.add_new_shape(self._control_panel.next_shape())
+
     def update(self):
         self._gameGrid.update()
 
@@ -52,14 +69,6 @@ class Tetris:
                 self._control_panel.increase_level()
                 self.level += 1
 
-    def _draw_game_over_text(self, surface):
-        font = pygame.font.Font(None, 66)
-
-        text = font.render("GAME OVER", 1, (10, 10, 10))
-        textpos = text.get_rect(topleft=(10, SCREEN_HEIGHT / 2))
-
-        surface.blit(text, textpos)
-
     def draw(self):
         self._screen.blit(self._background, (0, 0))
         self._gameGrid.draw(self._screen)
@@ -67,13 +76,4 @@ class Tetris:
 
         if self._gameGrid.is_game_over():
             self._draw_game_over_text(self._screen)
-
-    def is_game_over(self):
-        return self._gameGrid.is_game_over()
-
-    def tick(self, key):
-        self._collapsed_row_count = self._gameGrid.tick(key)
-
-        if not self._gameGrid.has_active_shape:
-            self._gameGrid.add_new_shape(self._control_panel.next_shape())
 
