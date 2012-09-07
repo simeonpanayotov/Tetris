@@ -1,3 +1,10 @@
+"""Define the game grids.
+
+Grid - the base class of all grids
+NextShapeGrid - holds only one shape
+GameGrid - holds the game shapes and progress
+
+"""
 import shapes
 import random
 import pygame
@@ -5,7 +12,17 @@ from pygame import *
 from constants import *
 
 class Grid:
-    """A Base class for all grids used in the game."""
+
+    """A Base class for all grids used in the game.
+
+    Implements base operations used by the rest of the grids.
+
+    Methods:
+    update - updates the positions of the current shape blocks
+    draw - draws the current shape blocks on a surface
+
+    """
+
     def __init__(self):
         self._active_shape = None
         self._active_blocks = pygame.sprite.RenderPlain()
@@ -44,13 +61,22 @@ class Grid:
         return shape
 
     def update(self):
+        """Update the currently displayed shape blocks."""
         self._active_blocks.update()
 
     def draw(self, screen):
+        """Draw the currently displayed shape blocks on the given surface."""
         self._active_blocks.draw(screen)
 
 class NextShapeGrid(Grid):
-    """A grid used to display the next shape."""
+
+    """A grid used to display the next shape.
+
+    Methods:
+    create_new_shape - creates a new randomly positioned Shape
+
+    """
+
     def __init__(self):
         Grid.__init__(self)
 
@@ -80,7 +106,9 @@ class NextShapeGrid(Grid):
             shape.move_left()
 
     def create_new_shape(self):
-        """Creates a new shape and places it at the top left corner.
+        """Create a new randomly positioned shape.
+
+        The shape is placed in the top left corner of the grid.
         The previous shape is cleared.
 
         """
@@ -93,10 +121,20 @@ class NextShapeGrid(Grid):
         self._active_blocks.add(shape.blocks)
 
 class GameGrid(Grid):
+
+    """The grid where the game is played.
+
+    Methods:
+    tick - advances the game by one step
+    add_new_shape - places a new shape at the top
+    is_game_over - verifies whether the game is over
+    update - updates all shape block positions
+    draw - draws all shape blocks to a surface
+
+    """
+
     def __init__(self):
-        """
-        Create the grid that represents the Tetris logical surface.
-        """
+        """Create the grid that represents the Tetris logical surface."""
         Grid.__init__(self)
 
         self._grid = []
@@ -193,6 +231,14 @@ class GameGrid(Grid):
         return collapsed_row_count
 
     def tick(self, key):
+        """Advance the game with one step.
+
+        Arguments:
+        key - the key that has been pressed during the current cycle
+
+        Returns the number of collapsed rows.
+
+        """
         if key:
             if key == K_LEFT and self._can_shape_move_left(self._active_shape):
                 self._active_shape.move_left()
@@ -217,6 +263,7 @@ class GameGrid(Grid):
         return 0
 
     def add_new_shape(self, shape):
+        """Place a new shape at the top center of the grid."""
         self._active_shape = shape
         self._active_blocks.add(shape.blocks)
         self.has_active_shape = True
@@ -224,15 +271,18 @@ class GameGrid(Grid):
         shape.move_right_to_position(START_X)
 
     def is_game_over(self):
+        """Check whether new shapes can be placed."""
         for block in self._active_shape.blocks:
             if self._grid[block.x][block.y]:
                 return 1
         return 0
 
     def update(self):
+        """Update all shape boxes with their new positions."""
         self._active_blocks.update()
         self._placed_blocks.update()
 
     def draw(self, screen):
+        """Draw all shape boxes to a surface."""
         self._active_blocks.draw(screen)
         self._placed_blocks.draw(screen)

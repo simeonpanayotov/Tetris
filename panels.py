@@ -1,8 +1,26 @@
+"""Define panels used in the game to display information.
+
+LabelPanel - displays static text
+ValuePanel - displays variable text
+NextShapePanel - displays the next shape
+LevelPanel - displays the current game level
+ScorePanel - dispalys the current palyer score
+ControlPanel - holds all game panels
+
+"""
 import pygame
 from constants import *
 import grids
 
 class LabelPanel:
+
+    """A panel displaying static text.
+
+    Methods:
+    draw - draw the panel on a surface
+
+    """
+
     def __init__(self, width, label):
         self._font = pygame.font.Font(None, 36)
 
@@ -18,6 +36,14 @@ class LabelPanel:
         surface.blit(self._panel, position)
 
 class ValuePanel:
+
+    """A panel displaying variable text.
+
+    Methods:
+    draw - draw the panel on a surface
+
+    """
+
     def __init__(self, width, value):
         self.value = value
         self._font = pygame.font.Font(None, 36)
@@ -40,6 +66,15 @@ class ValuePanel:
         surface.blit(self._panel, position)
 
 class NextShapePanel:
+
+    """A panel displaying a shape.
+
+    Methods:
+    next_shape - returns the next shape and creates a new one
+    draw - draws the panel on a surface
+
+    """
+
     def __init__(self, width):
         self._grid = grids.NextShapeGrid()
 
@@ -54,7 +89,8 @@ class NextShapePanel:
         self.next_shape()
 
     def next_shape(self):
-        """Creates a new shape and returns the previous one.
+        """Create and display a new shape and return the previous one.
+
         The method is called internally on init, so that
         subsequent calls always return a shape.
 
@@ -74,17 +110,24 @@ class NextShapePanel:
         surface.blit(self._panel, position)
 
 class LevelPanel:
-    def __init__(self, width):
-        """Creates a panel that renders the text 'Level:'
-        and the the current game level. Initial level is 1.
 
-        """
+    """A panel displaying the current game level.
+
+    Methods:
+    increase_level - increases the game level by one
+    draw - draw the panel on a surface
+
+    """
+
+    def __init__(self, width):
+        """Create the panel with the text 'Level: 1'"""
         self._level_label_panel = LabelPanel(width, "Level: ")
         self._level_value_panel = ValuePanel(width, 1)
         self.height = self._level_label_panel.height + self._level_value_panel.height
         self._panel = pygame.Surface((width, self.height))
 
     def increase_level(self):
+        """Increase the current level by one."""
         self._level_value_panel.value += 1
 
     def draw(self, surface, position):
@@ -94,11 +137,18 @@ class LevelPanel:
 
 
 class ScorePanel:
-    def __init__(self, width):
-        """Creates a panel that renders the current score
-        of the player.
 
-        """
+    """A panel displaying the current player score.
+
+    Methods:
+    get_score - returns the current player score
+    add_score - adds to the player score
+    draw - draw the panel on a surface
+
+    """
+
+    def __init__(self, width):
+        """Create the panel with the text 'Score: 1'"""
         self._score_label_panel = LabelPanel(width, "Score: ")
         self._score_value_panel = ValuePanel(width, 0)
         self.height = self._score_label_panel.height + self._score_value_panel.height
@@ -117,11 +167,19 @@ class ScorePanel:
         surface.blit(self._panel, position)
 
 class ControlPanel:
-    def __init__(self, width, height):
-        """Creates a panel with the controls for:
-        next shape, level and score.
 
-        """
+    """A panel showing the next shape, game level and player score.
+
+    Methods:
+    next_shape - returns the next shape and creates a new one
+    increase_level - increases the game level by one
+    get_score - returns the current player score
+    add_score - adds to the player score
+    draw - draw the panel on a surface
+
+    """
+
+    def __init__(self, width, height):
         self._next_shape_panel = NextShapePanel(PANEL_WIDTH)
         self._panel_level = LevelPanel(PANEL_WIDTH)
         self._panel_score = ScorePanel(PANEL_WIDTH)
@@ -129,15 +187,19 @@ class ControlPanel:
         self._panel.fill(PANEL_BG_COLOR)
 
     def next_shape(self):
+        """Return the next shape."""
         return self._next_shape_panel.next_shape()
 
     def get_score(self):
+        """Return the current player score."""
         return self._panel_score.get_score()
 
     def add_score(self, value):
+        """Add to the player score."""
         self._panel_score.add_score(value)
 
     def increase_level(self):
+        """Increase the game level."""
         self._panel_level.increase_level()
 
     def draw(self, surface, position):

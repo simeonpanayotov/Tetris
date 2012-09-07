@@ -1,8 +1,30 @@
+"""Define shapes and their building blocks.
+
+load_image(name) - loads an image from the 'images' folder
+Block - represents a positioned sprite
+Shape - implements the base shape operations
+VerticalShape - an abstract shape with two states - vertical and horizontal
+Square - a square shape
+Bar - a four-block bar
+ZigZag - a zig zag shape
+Cane - a shape in the form of a cane
+
+"""
 import os
 import pygame
 from constants import *
 
 def load_image(name):
+    """Load an image from the 'images' folder in the project.
+
+    Arguments:
+    name - the name of the image
+
+    Returns:
+    image - the loaded image, scaled to the BOX_LENGTH value
+    rectangle - the rectangle of the image
+
+    """
     fullname = os.path.abspath(os.path.join(IMAGES, name))
 
     try:
@@ -18,13 +40,33 @@ def load_image(name):
     return scaled_image, scaled_image.get_rect()
 
 class Block(pygame.sprite.Sprite):
-    """Represents a block of which the various Tetris shapes
-    are built from. Blocks are sprites and have a pari of coordinates,
+
+    """Represents the building block of all shapes.
+
+    Blocks are sprites and have a pair of coordinates,
     which represent their position in an arbitrary grid.
 
+    Attributes:
+    image - holds the loaded sprite
+    rect - the rectangle of the image used by pygame
+    x - the x-coordinate
+    y - the y-coordinate
+
+    Methods:
+    move_down - moves the block downards by one
+    move_left - moves the block on the left by one
+    move_right - moves the block on the right by one
+    move_up - moves the block upwards by one
+    update - updates the image rectangle with the new coordinates
+
     """
+
     def __init__(self, x, y):
-        """Creates a block on a given position."""
+        """Create a block on a given position.
+
+        Load the default brick image as the image of the sprite.
+
+        """
         pygame.sprite.Sprite.__init__(self)
 
         self.image, self.rect = load_image(BRICK_PNG)
@@ -33,22 +75,47 @@ class Block(pygame.sprite.Sprite):
         self.y = y
 
     def move_down(self):
+        """Increase the y-coordinate with one."""
         self.y += 1
 
     def move_left(self):
+        """Decrease the x-coordinate with one."""
         self.x -= 1
 
     def move_right(self):
+        """Increase the x-coordinate with one."""
         self.x += 1
 
     def move_up(self):
+        """Decrease the y-coordinate with one."""
         self.y -= 1
 
     def update(self):
+        """Update the block image rectangle with the new coordinates."""
         self.rect.topleft = (self.x * BOX_LENGTH, self.y * BOX_LENGTH)
 
 class Shape():
+
+    """Define the base operations of all shapes.
+
+    Use one of the concrete shapes - Bar, Square, ZigZag or Cane.
+
+    Attributes:
+    blocks - holds the blocks that the shape consists of
+
+    Methods:
+    move_down - moves the shape and all its blocks downwards by one
+    move_left - moves the shape and all its blocks on the left by one
+    move_right - moves the shape and all its blocks on the right by one
+    move_up - moves the shape and all its blocks upwards by one
+    move_right_to_position - moves the shape to the right to a position
+    clear_blocks - clears block references of the shape
+    rotate - rotates the shape by a predefined step
+
+    """
+
     def __init__(self):
+        """Create a new shape."""
         self.blocks = []
         self._center_block = None
 
@@ -84,30 +151,56 @@ class Shape():
             self.blocks[key].y += transform[key][1]
 
     def move_down(self):
+        """Move the shape blocks downwards by one."""
         for block in self.blocks:
             block.move_down()
 
     def move_left(self):
+        """Move the shape blocks on the left by one."""
         for block in self.blocks:
             block.move_left()
 
     def move_right(self):
+        """Move the shape blocks on the right by one."""
         for block in self.blocks:
             block.move_right()
 
     def move_up(self):
+        """Move the shape blocks upwards by one."""
         for block in self.blocks:
             block.move_up()
 
     def clear_blocks(self):
+        """Remove all references to the shape's blocks."""
         self.blocks = []
         self._center_block = None
 
     def move_right_to_position(self, x):
+        """"Move the shape to the right until it reaches the given x-coord.
+
+        The shape reaches the destination when its center block
+        reaches the given x-coord.
+
+        """
         while self._center_block.x != x:
             self.move_right()
 
     def rotate(self, grid, validate_new_position=True):
+        """Rotate the shape.
+
+        The shape rotates by a predetermined step.
+        If the new shape position is invalid in the parent grid,
+        the shape returns to its original position.
+
+        Arguments:
+        grid - the grid where the shape lives
+
+        Keyword arguments:
+        validate_new_position - indicates where the new position
+        is to be validated in the parent grid (Default: True).
+
+        """
+
         transform = self._get_next_transform()
         self._rotate(transform)
 
@@ -118,6 +211,7 @@ class Shape():
             self._rotate(transform)
 
 class Square(Shape):
+    """A square shape consisting of 4 blocks."""
     def __init__(self, x, y):
         Shape.__init__(self)
 
@@ -133,6 +227,13 @@ class Square(Shape):
         self._center_block = self.blocks[0]
 
 class VerticalShape(Shape):
+
+    """An abstract shape with two states - horizontal and vertical.
+
+    Use one of the concrete shapes inheriting it - Bar and ZigZag.
+
+    """
+
     def __init__(self):
         Shape.__init__(self)
 
@@ -143,14 +244,20 @@ class VerticalShape(Shape):
         self._vertical = not self._vertical
 
 class Bar(VerticalShape):
-    #TODO: check conventions!!!
+
+    """A bar shape consisting of 4 blocks.
+
+    Its original position is vertical.
+
+    """
+
     _vertical_transform = {
         0: (1, -1),
         1: (0, 0),
         2: (-1, 1),
         3: (-2, 2)
     }
-    #TODO: check conventions!!!
+
     _horizontal_transform = {
         0: (-1, 1),
         1: (0, 0),
@@ -159,6 +266,7 @@ class Bar(VerticalShape):
     }
 
     def __init__(self, x, y):
+        """Create a new bar shape at the given coordinates."""
         VerticalShape.__init__(self)
 
         self._vertical = True
@@ -185,14 +293,20 @@ class Bar(VerticalShape):
             return Bar._vertical_transform
 
 class ZigZag(VerticalShape):
-    #TODO: check conventions!!!
+
+    """A zig-zag shape consisting of 4 blocks.
+
+    Its original position is vertical.
+
+    """
+
     _vertical_transform = {
         0: (0, 1),
         1: (-1, 2),
         2: (0, -1),
         3: (-1, 0)
     }
-    #TODO: check conventions!!!
+
     _horizontal_transform = {
         0: (0, -1),
         1: (1, -2),
@@ -201,6 +315,7 @@ class ZigZag(VerticalShape):
     }
 
     def __init__(self, x, y):
+        """Create a new zig-zag shape at the given coordinates."""
         VerticalShape.__init__(self)
 
         self._vertical = False
@@ -227,6 +342,16 @@ class ZigZag(VerticalShape):
             return ZigZag._vertical_transform
 
 class Cane(Shape):
+
+    """A cane-shaped shaped consisting of four blocks.
+
+    Has four positions: top, right, bottom, left.
+    The shape rotates by one step in the same order.
+
+    Its original position is top.
+
+    """
+
     _right_transform = {
         0: (1, 0),
         1: (0, 1),
@@ -256,6 +381,7 @@ class Cane(Shape):
     }
 
     def __init__(self, x, y):
+        """Create a cane shape at the given coordinates."""
         Shape.__init__(self)
 
         self._position = 0
