@@ -135,7 +135,6 @@ class LevelPanel:
         self._level_value_panel.draw(self._panel, (0, self._level_label_panel.height))
         surface.blit(self._panel, position)
 
-
 class ScorePanel:
 
     """A panel displaying the current player score.
